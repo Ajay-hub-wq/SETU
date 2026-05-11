@@ -1,32 +1,18 @@
 {
   "name": "setu-chaupal",
-  "homepage": "https://Ajay-hub-wq.github.io/SETU",
   "version": "1.0.0",
-  "description": "Setu Calling and Chat App",
-  "main": "src/index.js",
+  "private": true,
+  "homepage": "https://Ajay-hub-wq.github.io/SETU",
   "dependencies": {
-    "ajv": "6.12.6",
     "firebase": "^10.7.0",
     "peerjs": "^1.5.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "^5.0.1",
-    "web-vitals": "^2.1.4"
-  },
-  "overrides": {
-    "ajv": "6.12.6"
+    "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "CI=false react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "build": "CI=false react-scripts build"
   },
   "browserslist": {
     "production": [
