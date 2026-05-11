@@ -236,6 +236,16 @@ useEffect(() => {
   // --- UI RENDERS ---
   if (!user) {
     return (
+      {/* 1. New Smooth Intro Animation (Splash Screen) */}
+    {showIntro && (
+      <div className="splash-container">
+        <div className="splash-logo-box">
+          <Icons.Tree />
+        </div>
+        <div className="splash-text-logo">Setu</div>
+        <div className="splash-subtitle">Connecting Chaupals</div>
+      </div>
+    )}
       <div className="mobile-container dark-theme">
         <div className="login-box animate-pop">
           <Icons.Tree />
