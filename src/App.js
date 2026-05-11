@@ -63,6 +63,13 @@ export default function App() {
 
   // --- 1. LOCAL STORAGE (Save Session) ---
   useEffect(() => {
+    // --- INTRO SCREEN TIMER (4 seconds) ---
+useEffect(() => {
+  const timer = setTimeout(() => {
+    setShowIntro(false); // Hide intro and show login after 4 seconds
+  }, 4000); // Time in milliseconds (4000ms = 4 seconds)
+  return () => clearTimeout(timer);
+}, []);
     const savedSession = localStorage.getItem('setuSession');
     if(savedSession) {
       const data = JSON.parse(savedSession);
