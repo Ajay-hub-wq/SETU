@@ -1,5 +1,6 @@
 {
   "name": "setu-chaupal",
+  "homepage": "https://Ajay-hub-wq.github.io/SETU",
   "version": "1.0.0",
   "description": "Setu Calling and Chat App",
   "main": "src/index.js",
