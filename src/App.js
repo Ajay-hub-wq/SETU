@@ -61,15 +61,16 @@ export default function App() {
   const myVideoRef = useRef();
   const remoteVideoRef = useRef();
 
+  // --- INTRO SCREEN TIMER (4 seconds) ---
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowIntro(false); // Hide intro and show login after 4 seconds
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, []);
+
   // --- 1. LOCAL STORAGE (Save Session) ---
   useEffect(() => {
-    // --- INTRO SCREEN TIMER (4 seconds) ---
-useEffect(() => {
-  const timer = setTimeout(() => {
-    setShowIntro(false); // Hide intro and show login after 4 seconds
-  }, 4000); // Time in milliseconds (4000ms = 4 seconds)
-  return () => clearTimeout(timer);
-}, []);
     const savedSession = localStorage.getItem('setuSession');
     if(savedSession) {
       const data = JSON.parse(savedSession);
@@ -142,7 +143,7 @@ useEffect(() => {
     if(targetId.length > 5) {
         const q = query(collection(db, 'users'), where('phoneNumber', '==', targetId));
         const snap = await getDocs(q);
-       if(snap.empty) {
+        if(snap.empty) {
             const invite = window.confirm("यह नंबर अभी Setu पर नहीं है! क्या आप उन्हें WhatsApp पर Invite भेजना चाहते हैं?");
             if(invite) {
                 const message = "Hey! I am calling you on Setu Chaupal. Join me here fast: https://setu-india.netlify.app/";
@@ -150,6 +151,10 @@ useEffect(() => {
             }
             return;
         }
+        targetId = snap.docs[0].data().setuId;
+    } else if (targetId.length !== 5) {
+        return alert("Invalid 5-Digit ID or Phone Number.");
+    }
 
     setCurrentFriendId(targetId);
     setActiveRoom([setuId, targetId].sort().join('_'));
@@ -236,38 +241,41 @@ useEffect(() => {
   // --- UI RENDERS ---
   if (!user) {
     return (
-      {/* 1. New Smooth Intro Animation (Splash Screen) */}
-    {showIntro && (
-      <div className="splash-container">
-        <div className="splash-logo-box">
-          <Icons.Tree />
+      <>
+        {/* 1. New Smooth Intro Animation (Splash Screen) */}
+        {showIntro && (
+          <div className="splash-container">
+            <div className="splash-logo-box">
+              <Icons.Tree />
+            </div>
+            <div className="splash-text-logo">Setu</div>
+            <div className="splash-subtitle">Connecting Chaupals</div>
+          </div>
+        )}
+        
+        <div className="mobile-container dark-theme">
+          <div className="login-box animate-pop">
+            <Icons.Tree />
+            <h1 className="logo-text">Setu</h1>
+            <p className="subtitle">ENTER THE CHAUPAL</p>
+            
+            {!loginMode ? (
+              <>
+                <button onClick={handleGoogleLogin} className="btn-google" style={{marginBottom: '15px'}}>Continue with Google</button>
+                <div className="divider"><span>OR</span></div>
+                <button onClick={() => setLoginMode('phone')} className="btn-phone">Login via Phone Number</button>
+              </>
+            ) : (
+              <>
+                <input type="text" placeholder="Your Display Name" value={nameInput} onChange={e => setNameInput(e.target.value)} className="input-field" />
+                <input type="number" placeholder="Mobile No. (e.g. 9876543210)" value={phoneInput} onChange={e => setPhoneInput(e.target.value)} className="input-field" />
+                <button onClick={handlePhoneLogin} className="btn-primary" style={{width: '100%', marginBottom: '15px'}}>Create & Enter</button>
+                <button onClick={() => setLoginMode(null)} className="btn-text" style={{width: '100%'}}>Back</button>
+              </>
+            )}
+          </div>
         </div>
-        <div className="splash-text-logo">Setu</div>
-        <div className="splash-subtitle">Connecting Chaupals</div>
-      </div>
-    )}
-      <div className="mobile-container dark-theme">
-        <div className="login-box animate-pop">
-          <Icons.Tree />
-          <h1 className="logo-text">Setu</h1>
-          <p className="subtitle">ENTER THE CHAUPAL</p>
-          
-          {!loginMode ? (
-            <>
-              <button onClick={handleGoogleLogin} className="btn-google" style={{marginBottom: '15px'}}>Continue with Google</button>
-              <div className="divider"><span>OR</span></div>
-              <button onClick={() => setLoginMode('phone')} className="btn-phone">Login via Phone Number</button>
-            </>
-          ) : (
-            <>
-              <input type="text" placeholder="Your Display Name" value={nameInput} onChange={e => setNameInput(e.target.value)} className="input-field" />
-              <input type="number" placeholder="Mobile No. (e.g. 9876543210)" value={phoneInput} onChange={e => setPhoneInput(e.target.value)} className="input-field" />
-              <button onClick={handlePhoneLogin} className="btn-primary" style={{width: '100%', marginBottom: '15px'}}>Create & Enter</button>
-              <button onClick={() => setLoginMode(null)} className="btn-text" style={{width: '100%'}}>Back</button>
-            </>
-          )}
-        </div>
-      </div>
+      </>
     );
   }
 
