@@ -440,3 +440,84 @@ button:active {
   cursor: pointer;
   transition: 0.2s;
 }
+/* --- New Intro / Splash Screen Styles --- */
+.splash-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #0d0100; /* Deep Dark Background */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  animation: fadeOutSplash 1s ease-out 3.5s forwards; /* Fades out after 3.5 seconds */
+}
+
+.splash-logo-box {
+  animation: pulseLogo 2s ease-in-out infinite; /* Logo pulsing animation */
+  color: #D4A373; /* Golden/Beige for Banyan Tree */
+  transform: scale(1);
+}
+
+.splash-text-logo {
+  font-family: 'Yatra One', cursive; /* A stylized Hindi-looking font */
+  font-size: 60px;
+  color: #EAE0D5; /* Lighter color */
+  margin: 10px 0;
+  text-shadow: 0 0 15px rgba(212, 163, 115, 0.6); /* Glow effect */
+  position: relative;
+  display: inline-block;
+  animation: fadeInText 1s ease-out 1s forwards;
+  opacity: 0; /* Starts hidden */
+}
+
+/* Calligraphy & Hindi Mix CSS effect */
+.splash-text-logo::after {
+  content: '';
+  position: absolute;
+  top: 10px; /* Positions line near top like Hindi shirorekha */
+  left: 5px;
+  right: 5px;
+  height: 3px;
+  background-color: #EAE0D5;
+  border-radius: 5px;
+}
+
+.splash-subtitle {
+  color: #A68A6D;
+  font-size: 14px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-top: -5px;
+  animation: fadeInText 1s ease-out 2s forwards;
+  opacity: 0; /* Starts hidden */
+}
+
+/* --- Smooth Animations Keyframes --- */
+@keyframes pulseLogo {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+@keyframes fadeInText {
+  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(10px); }
+}
+
+@keyframes fadeOutSplash {
+  to { opacity: 0; visibility: hidden; }
+}
+
+/* Make sure main login box fades in after splash */
+.login-box {
+  animation: popUpLogin 1s ease-out 4s forwards !important;
+  opacity: 0;
+}
+
+@keyframes popUpLogin {
+  to { opacity: 1; transform: scale(1); }
+  from { opacity: 0; transform: scale(0.9); }
+}
