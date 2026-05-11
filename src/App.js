@@ -134,11 +134,14 @@ export default function App() {
     if(targetId.length > 5) {
         const q = query(collection(db, 'users'), where('phoneNumber', '==', targetId));
         const snap = await getDocs(q);
-        if(snap.empty) return alert("No user found with this mobile number.");
-        targetId = snap.docs[0].data().setuId;
-    } else if (targetId.length !== 5) {
-        return alert("Invalid 5-Digit ID or Phone Number.");
-    }
+       if(snap.empty) {
+            const invite = window.confirm("यह नंबर अभी Setu पर नहीं है! क्या आप उन्हें WhatsApp पर Invite भेजना चाहते हैं?");
+            if(invite) {
+                const message = "Hey! I am calling you on Setu Chaupal. Join me here fast: https://setu-india.netlify.app/";
+                window.open(`https://wa.me/91${targetId}?text=${encodeURIComponent(message)}`, '_blank');
+            }
+            return;
+        }
 
     setCurrentFriendId(targetId);
     setActiveRoom([setuId, targetId].sort().join('_'));
