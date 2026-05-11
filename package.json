@@ -4,12 +4,16 @@
   "description": "Setu Calling and Chat App",
   "main": "src/index.js",
   "dependencies": {
+    "ajv": "6.12.6",
     "firebase": "^10.7.0",
     "peerjs": "^1.5.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
     "web-vitals": "^2.1.4"
+  },
+  "overrides": {
+    "ajv": "6.12.6"
   },
   "scripts": {
     "start": "react-scripts start",
