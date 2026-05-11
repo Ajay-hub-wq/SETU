@@ -35,6 +35,7 @@ const Icons = {
 
 export default function App() {
   const [user, setUser] = useState(null);
+  const [showIntro, setShowIntro] = useState(true); // Control Intro Animation
   const [setuId, setSetuId] = useState(null);
   const [activeTab, setActiveTab] = useState('chat');
   
