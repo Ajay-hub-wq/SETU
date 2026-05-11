@@ -17,8 +17,8 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install Packages and Fix Error
-        run: rm -f package-lock.json && npm install && npm install ajv@8
+      - name: Install Packages
+        run: npm install --legacy-peer-deps
 
       - name: Build App (Bypass Errors)
         run: CI=false npm run build
